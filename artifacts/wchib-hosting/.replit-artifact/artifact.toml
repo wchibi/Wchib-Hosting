@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Wchib Hosting"
+description = "A premium, responsive Minecraft hosting website for players and communities in Nepal and India, with seven data-driven plans, product details, features, FAQs, and SEO-ready pages."
+version = "1.0.0"
+id = "artifacts/wchib-hosting"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23042
+
+[services.development]
+run = "pnpm --filter @workspace/wchib-hosting run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/wchib-hosting", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/wchib-hosting/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23042"
+BASE_PATH = "/"

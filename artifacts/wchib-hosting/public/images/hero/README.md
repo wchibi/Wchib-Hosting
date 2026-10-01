@@ -1,0 +1,1 @@
+The hero server object is rendered with lightweight local SVG geometry and CSS transforms.
