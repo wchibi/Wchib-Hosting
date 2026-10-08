@@ -22,7 +22,7 @@ export function PlanCard({ plan, index = 0 }: { plan: HostingPlan; index?: numbe
         <p className="plan-description">{plan.description}</p>
         <div className="plan-price"><strong>{plan.price}</strong><span>/ month</span></div>
         <ul className="plan-specs" aria-label={`${plan.name} plan specifications`}>
-          <li><small><MemoryStick size={12} aria-hidden="true" /> Memory</small>{plan.ram.split(' [')[0]}</li>
+          <li><small><MemoryStick size={12} aria-hidden="true" /> Memory</small>{plan.ram} {plan.ramType}</li>
           <li><small><Cpu size={12} aria-hidden="true" /> CPU</small>{plan.cpu}</li>
           <li><small><Database size={12} aria-hidden="true" /> Storage</small>{plan.storage}</li>
           <li><small><span className="tier-gem" aria-hidden="true" /> Processor</small>{plan.processor}</li>

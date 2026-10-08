@@ -7,19 +7,20 @@ import {
   Workflow,
 } from 'lucide-react';
 import { siteConfig } from '@/config/site';
-import { findPlan, plans } from '@/data/plans';
+import { findPlan, plans, platform, platformCopy } from '@/data/plans';
 import { BrandMark } from '@/components/brand-mark';
 import { DiscordLink } from '@/components/discord-link';
 import { PlanCard } from '@/components/plan-card';
+import { ReviewSection } from '@/components/reviews';
 import { ParallaxLayer, Reveal } from '@/components/motion';
 import { Seo } from '@/components/seo';
 
 const pageDescriptions = {
-  home: 'Affordable Minecraft hosting for Nepal and India, with AMD EPYC processors, DDR4 memory and NVMe SSD storage across seven listed monthly resource tiers.',
+  home: `Affordable Minecraft hosting for Nepal and India, with ${platform.processor} processors, ${platform.ramType} memory and NVMe SSD storage across seven listed monthly resource tiers from ${platform.startingPrice}.`,
   plans: 'Compare seven Minecraft server hosting tiers from Wchib Hosting, including memory, CPU allocation, NVMe storage and monthly pricing for Nepal and India.',
-  features: 'Explore the hardware foundation of Wchib Hosting Minecraft plans: AMD EPYC processors, DDR4 3200 MT/s memory, NVMe SSD storage and seven resource tiers.',
+  features: `Explore the hardware foundation of Wchib Hosting Minecraft plans: ${platform.processor} processing, ${platform.ramType} memory, NVMe SSD storage and seven resource tiers.`,
   about: 'Wchib Hosting is a Minecraft-focused hosting brand working to make server hosting more accessible to players and communities in Nepal and eventually India.',
-  faq: 'Find clear answers about Wchib Hosting Minecraft plans, listed AMD EPYC hardware, DDR4 memory, NVMe storage, resource tiers and current options.',
+  faq: `Find clear answers about Wchib Hosting Minecraft plans, listed ${platform.processor} hardware, ${platform.ramType} memory, NVMe storage, resource tiers and current pricing.`,
 };
 
 function PageHero({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
@@ -43,14 +44,15 @@ function HomePage() {
           <div className="hero-grid" aria-hidden="true" />
           <div className="container hero-layout">
             <div className="hero-copy">
-              <span className="eyebrow">Minecraft infrastructure · Nepal &amp; India</span>
+              <span className="eyebrow">Cheap Minecraft hosting in Nepal</span>
               <h1>Minecraft Hosting <span className="text-gradient">Built for Nepal &amp; India</span></h1>
-              <p className="hero-lede">Affordable Minecraft hosting powered by AMD EPYC processors, DDR4 memory and NVMe SSD storage.</p>
+              <p className="hero-lede">Affordable Minecraft hosting powered by {platform.processor} processors, {platform.ramType} memory and NVMe SSD storage.</p>
               <div className="hero-actions">
                 <Link href="/plans" className="button button-primary" data-testid="hero-explore-plans">Explore Plans <ArrowRight size={15} aria-hidden="true" /></Link>
                 <DiscordLink className="button button-quiet" data-testid="hero-connect-discord">Join Wchib on Discord <ArrowUpRight size={14} aria-hidden="true" /></DiscordLink>
               </div>
               <div className="hero-meta">
+                <span><i aria-hidden="true" /> Starting at {platform.startingPrice} / month</span>
                 <span><i aria-hidden="true" /> Seven clear resource tiers</span>
                 <span><i aria-hidden="true" /> Minecraft-focused hosting</span>
               </div>
@@ -84,8 +86,8 @@ function HomePage() {
 
         <section className="principles" aria-label="Hosting platform details">
           <div className="container principle-grid">
-            <article className="principle"><div className="principle-icon"><Cpu size={17} /></div><h3>AMD EPYC</h3><p>A server-class CPU platform across the listed plans.</p></article>
-            <article className="principle"><div className="principle-icon"><MemoryStick size={17} /></div><h3>DDR4 3200 MT/s</h3><p>Every listed tier includes DDR4 memory at 3200 MT/s.</p></article>
+            <article className="principle"><div className="principle-icon"><Cpu size={17} /></div><h3>{platform.processor}</h3><p>The processor listed across every tier on this site.</p></article>
+            <article className="principle"><div className="principle-icon"><MemoryStick size={17} /></div><h3>{platform.ramType} RAM</h3><p>Every listed tier runs on {platform.ramType} memory.</p></article>
             <article className="principle"><div className="principle-icon"><Database size={17} /></div><h3>NVMe SSD</h3><p>NVMe SSD storage is included in each plan allocation.</p></article>
             <article className="principle"><div className="principle-icon"><Layers3 size={17} /></div><h3>Minecraft focused</h3><p>A hosting brand centered on Minecraft server workloads.</p></article>
           </div>
@@ -97,7 +99,7 @@ function HomePage() {
               <div className="section-heading">
                 <span className="eyebrow">A tier for your world</span>
                 <h2>Room to start.<br /><span className="text-gradient">Space to grow.</span></h2>
-                <p>Seven straightforward configurations. Compare the resources and choose a plan that suits your Minecraft community.</p>
+                <p>Seven straightforward configurations, starting at {platform.startingPrice} per month and running up to {platform.endingPrice}. Compare the resources and choose a plan that suits your Minecraft community.</p>
               </div>
               <Link href="/plans" className="button button-quiet" data-testid="home-all-plans">Compare all plans <ArrowRight size={14} /></Link>
             </div>
@@ -105,18 +107,20 @@ function HomePage() {
           </div>
         </section>
 
+        <ReviewSection />
+
         <section className="technical-section section">
           <div className="container technical-layout">
             <div className="section-heading">
-              <span className="eyebrow">The listed platform</span>
-              <h2>Clear specs.<br /><span className="text-gradient">No guesswork.</span></h2>
-              <p>Every Wchib plan shares the same platform foundation. The allocations scale by tier, so the differences are easy to compare.</p>
+              <span className="eyebrow">Powered by AMD EPYC</span>
+              <h2>AMD EPYC <span className="text-gradient">7C13</span></h2>
+              <p>Enterprise-class server processing designed for demanding Minecraft workloads. Every tier shares the same platform, so the allocations are the only thing that changes.</p>
             </div>
             <div className="spec-table" aria-label="Platform specifications">
-              <div className="spec-row"><span>Processor family</span><strong>AMD EPYC</strong><Cpu size={16} /></div>
-              <div className="spec-row"><span>Memory type</span><strong>DDR4 3200 MT/s</strong><MemoryStick size={16} /></div>
-              <div className="spec-row"><span>Storage type</span><strong>NVMe SSD</strong><Database size={16} /></div>
-              <div className="spec-row"><span>Plan memory range</span><strong>4GB — 32GB</strong><Gauge size={16} /></div>
+              <div className="spec-row"><span>Processor</span><strong>{platform.processor}</strong><Cpu size={16} /></div>
+              <div className="spec-row"><span>Memory</span><strong>{platform.ramType} · {platform.memoryRange}</strong><MemoryStick size={16} /></div>
+              <div className="spec-row"><span>CPU allocation</span><strong>{platform.cpuRange}</strong><Gauge size={16} /></div>
+              <div className="spec-row"><span>Storage</span><strong>{platform.storageType} · {platform.storageRange}</strong><Database size={16} /></div>
             </div>
           </div>
         </section>
@@ -144,13 +148,14 @@ function PlansPage() {
     <>
       <Seo title="Minecraft Hosting Plans" description={pageDescriptions.plans} path="/plans" />
       <main id="main-content">
-        <PageHero eyebrow="Plans" title="Choose Your Minecraft Server" description="From a smaller community server to larger Minecraft workloads, compare the listed resources and find a tier that fits." />
+        <PageHero eyebrow="Plans" title="Choose Your Minecraft Server" description={`Seven tiers from ${platform.startingPrice} to ${platform.endingPrice} per month. Compare the listed resources and find a tier that fits.`} />
         <section className="page-section">
           <div className="container">
             <div className="plan-grid plan-grid-wide">{plans.map((plan, index) => <Reveal key={plan.slug} delay={index % 3 * 0.04}><PlanCard plan={plan} index={index} /></Reveal>)}</div>
-            <div className="plans-banner"><p><strong>Every tier, one clear foundation.</strong> AMD EPYC · DDR4 3200 MT/s · NVMe SSD</p><Link href="/faq" className="button button-quiet" data-testid="plans-questions">Plan questions <ArrowRight size={14} /></Link></div>
+            <div className="plans-banner"><p><strong>Every tier, one clear foundation.</strong> {platformCopy.banner}</p><Link href="/faq" className="button button-quiet" data-testid="plans-questions">Plan questions <ArrowRight size={14} /></Link></div>
           </div>
         </section>
+        <ReviewSection />
       </main>
     </>
   );
@@ -160,7 +165,7 @@ function PlanDetailPage({ slug }: { slug?: string }) {
   const plan = findPlan(slug);
   if (!plan) return <NotFoundPage />;
   const title = `${plan.name} Minecraft Hosting Plan`;
-  const description = `${plan.name} plan from Wchib Hosting: ${plan.ram}, ${plan.cpu} CPU allocation, ${plan.storage} and ${plan.price} per month.`;
+  const description = `${plan.name} plan from Wchib Hosting: ${plan.ram} ${plan.ramType} RAM, ${plan.cpu} CPU allocation, ${plan.storage} and ${plan.price} per month on ${plan.processor}.`;
   return (
     <>
       <Seo title={title} description={description} path={`/plans/${plan.slug}`} />
@@ -187,11 +192,11 @@ function PlanDetailPage({ slug }: { slug?: string }) {
             <div className="detail-panel">
               <span className="eyebrow">Wchib / {plan.name}</span>
               <h2>{plan.name} server hosting</h2>
-              <p>{plan.description} Built on the same listed AMD EPYC, DDR4 and NVMe platform.</p>
+              <p>{plan.description} Built on the same listed {platform.processor}, {platform.ramType} and NVMe platform.</p>
               <div className="detail-price"><strong>{plan.price}</strong><span>/ month</span></div>
               <div className="detail-specs">
-                <div className="detail-spec"><span>RAM</span><strong>{plan.ram}</strong></div>
-                <div className="detail-spec"><span>CPU allocation</span><strong>{plan.cpu}</strong></div>
+                <div className="detail-spec"><span>Memory</span><strong>{plan.ram} {plan.ramType} RAM</strong></div>
+                <div className="detail-spec"><span>Allocation</span><strong>{plan.cpu} CPU</strong></div>
                 <div className="detail-spec"><span>Processor</span><strong>{plan.processor}</strong></div>
                 <div className="detail-spec"><span>Storage</span><strong>{plan.storage}</strong></div>
               </div>
@@ -208,10 +213,10 @@ function PlanDetailPage({ slug }: { slug?: string }) {
 }
 
 const featureData = [
-  { title: 'AMD EPYC', icon: Cpu, body: 'Wchib plans are based on AMD EPYC processors. The processor family is consistent across the listed resource tiers.' },
-  { title: 'DDR4 memory', icon: MemoryStick, body: 'Each listed plan includes DDR4 memory at 3200 MT/s, with allocations from 4GB through 32GB.' },
-  { title: 'NVMe SSD storage', icon: Database, body: 'NVMe SSD storage is part of every plan, with the listed capacity scaling from 16GB to 160GB.' },
-  { title: 'Flexible resource tiers', icon: Gauge, body: 'Choose a listed allocation from 4GB RAM to 32GB RAM. CPU and storage allocations also scale by tier.' },
+  { title: platform.processor, icon: Cpu, body: `Wchib plans run on ${platform.processor} processors. The same processor is listed across all seven resource tiers.` },
+  { title: `${platform.ramType} memory`, icon: MemoryStick, body: `Each listed plan includes ${platform.ramType} memory, with allocations from ${plans[0].ram} through ${plans[plans.length - 1].ram}.` },
+  { title: 'NVMe SSD storage', icon: Database, body: `NVMe SSD storage is part of every plan, with the listed capacity scaling from ${platform.storageMin} to ${platform.storageMax}.` },
+  { title: 'Flexible resource tiers', icon: Gauge, body: `Choose a listed allocation from ${plans[0].ram} to ${plans[plans.length - 1].ram} of RAM. CPU allocation scales from ${platform.cpuRange} by tier.` },
   { title: 'Minecraft-focused hosting', icon: Workflow, body: 'Wchib is a hosting brand built around Minecraft server workloads and the communities that create them.' },
   { title: 'Community support', icon: MessageCircle, body: 'Wchib has a Discord/community presence. Contact the team through the provided channels for current details.' },
 ];
@@ -241,10 +246,10 @@ function FeaturesPage() {
           <div className="container technical-layout">
             <div className="section-heading"><span className="eyebrow">Seven configurations</span><h2>Pick the resources.<br /><span className="text-gradient">Build your world.</span></h2><p>RAM, CPU allocation and NVMe storage vary by tier; the processor and memory generation are listed clearly on every plan.</p></div>
             <div className="spec-table">
-              <div className="spec-row"><span>Memory range</span><strong>4GB – 32GB</strong><MemoryStick size={16} /></div>
-              <div className="spec-row"><span>CPU allocation</span><strong>200% – 800%</strong><Cpu size={16} /></div>
-              <div className="spec-row"><span>Storage range</span><strong>16GB – 160GB</strong><Database size={16} /></div>
-              <div className="spec-row"><span>Processor family</span><strong>AMD EPYC</strong><Server size={16} /></div>
+              <div className="spec-row"><span>Memory</span><strong>{platform.ramType} · {platform.memoryRange}</strong><MemoryStick size={16} /></div>
+              <div className="spec-row"><span>CPU allocation</span><strong>{platform.cpuRange}</strong><Cpu size={16} /></div>
+              <div className="spec-row"><span>Storage</span><strong>{platform.storageType} · {platform.storageRange}</strong><Database size={16} /></div>
+              <div className="spec-row"><span>Processor</span><strong>{platform.processor}</strong><Server size={16} /></div>
             </div>
           </div>
         </section>
@@ -269,7 +274,7 @@ function AboutPage() {
               <span className="eyebrow">Why Wchib exists</span>
               <h2>Good worlds start with a place to build.</h2>
               <p>Wchib Hosting is centered on one thing: Minecraft servers and the people who make them worth joining. The idea is to make hosting more accessible to players and communities in Nepal, with a longer-term goal of reaching across India.</p>
-              <p>That starts with a straightforward lineup. Seven resource tiers share an AMD EPYC processor platform, DDR4 3200 MT/s memory and NVMe SSD storage. Each plan shows its allocation and monthly price clearly.</p>
+              <p>That starts with a straightforward lineup. Seven resource tiers share a {platform.processor} processor platform, {platform.ramType} memory and NVMe SSD storage. Plans start at {platform.startingPrice} per month, and each one shows its allocation and monthly price clearly.</p>
               <p>Wchib is growing its brand around useful information, considered infrastructure and a community-first approach. The focus is on the work ahead, not claims that cannot be backed up.</p>
               <div className="about-note">Have a question about current plans or availability? Contact Wchib Hosting through the Discord route or the contact details in the footer.</div>
             </div>
@@ -286,11 +291,12 @@ function AboutPage() {
 
 const faqEntries = [
   { question: 'What is Wchib Hosting?', answer: 'Wchib Hosting is a Minecraft-focused hosting brand built with a goal of making server hosting more accessible to players and communities in Nepal and eventually across India.' },
-  { question: 'What processor do Wchib plans use?', answer: 'All seven listed plans use AMD EPYC processors.' },
-  { question: 'What type of storage do the plans include?', answer: 'Each listed plan includes NVMe SSD storage. The listed capacities range from 16GB to 160GB, depending on the plan.' },
-  { question: 'What RAM options are available?', answer: 'The current lineup includes 4GB, 6GB, 8GB, 10GB, 12GB, 16GB and 32GB options. Each plan lists DDR4 3200 MT/s memory.' },
+  { question: 'How much do the plans cost?', answer: `Plans run from ${platform.startingPrice} per month for Stone up to ${platform.endingPrice} per month for Netherite. Every listed tier is billed monthly with no separate setup fee listed.` },
+  { question: 'What processor do Wchib plans use?', answer: `All seven listed plans use the ${platform.processor}.` },
+  { question: 'What type of storage do the plans include?', answer: `Each listed plan includes ${platform.storageType} storage. The listed capacities range from ${platform.storageMin} to ${platform.storageMax}, depending on the plan.` },
+  { question: 'What RAM options are available?', answer: `The current lineup includes ${plans.map((plan) => plan.ram).join(', ').replace(/, ([^,]*)$/, ' and $1')} options. Each plan lists ${platform.ramType} memory.` },
   { question: 'Can I move to a larger plan later?', answer: 'Contact Wchib Hosting through Discord for current availability and upgrade options.' },
-  { question: 'How can I ask about current availability?', answer: 'Use the contact details in the site footer to reach Wchib Hosting. The Discord route is reserved for the community destination once it is provided.' },
+  { question: 'How can I ask about current availability?', answer: 'Use the contact details in the site footer to reach Wchib Hosting, or join the Discord for current details.' },
 ];
 
 function FaqPage() {

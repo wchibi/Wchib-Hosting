@@ -1,9 +1,11 @@
+import { platform } from '@/data/plans';
+
 const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL?.trim() || '';
 
 export const siteConfig = {
   name: 'Wchib Hosting',
   descriptor: 'Minecraft Hosting for Nepal & India',
-  description: 'Affordable Minecraft hosting with AMD EPYC processors, DDR4 memory and NVMe SSD storage.',
+  description: `Affordable Minecraft hosting from ${platform.startingPrice} per month, with ${platform.processor} processors, ${platform.ramType} memory and NVMe SSD storage.`,
   siteUrl: import.meta.env.VITE_SITE_URL?.trim() || '',
   discordRoute: '/discord',
   discordInvite: 'https://discord.gg/TYG8SEgnx5',
